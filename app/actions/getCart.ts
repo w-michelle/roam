@@ -1,9 +1,6 @@
-import { NextResponse } from "next/server";
-import getCurrentUser from "./getCurrentUser";
-import { SafeUser } from "@/types";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { createCart } from "../api/addToCart/route";
+
 const s3Client = new S3Client({
   region: "ca-central-1",
   credentials: {

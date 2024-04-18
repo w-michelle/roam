@@ -2,6 +2,39 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 export async function POST(request: Request) {
+  async function getCart() {
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+      return null;
+    }
+    const cart = await prisma?.cart.findFirst({
+      where: { userId: currentUser.id },
+      include: { listings: { include: { images: true } } },
+    });
+    if (cart) {
+      const safeCart = { ...cart, createdAt: cart.createdAt.toISOString() };
+      return safeCart;
+    } else {
+      return null;
+    }
+  }
+
+  async function createCart() {
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+      return null;
+    }
+
+    const cart = await prisma?.cart.create({
+      data: {
+        userId: currentUser.id,
+      },
+    });
+    const newCart = { ...cart, listings: [] };
+    return newCart;
+  }
   const listing = await request.json();
 
   const currentUser = await getCurrentUser();
@@ -35,38 +68,4 @@ export async function POST(request: Request) {
   } catch (error: any) {
     return NextResponse.json(error);
   }
-}
-
-async function getCart() {
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return null;
-  }
-  const cart = await prisma?.cart.findFirst({
-    where: { userId: currentUser.id },
-    include: { listings: { include: { images: true } } },
-  });
-  if (cart) {
-    const safeCart = { ...cart, createdAt: cart.createdAt.toISOString() };
-    return safeCart;
-  } else {
-    return null;
-  }
-}
-
-export async function createCart() {
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return null;
-  }
-
-  const cart = await prisma?.cart.create({
-    data: {
-      userId: currentUser.id,
-    },
-  });
-  const newCart = { ...cart, listings: [] };
-  return newCart;
 }
