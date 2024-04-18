@@ -160,7 +160,6 @@ const EditModal: React.FC<EditModalProp> = ({ listing, categories }) => {
   if (step === STEPS.IMAGES) {
     headerContent = <div className="text-lg font-semibold">Add Images</div>;
     bodyContent = (
-      //
       <div className="">
         {!newUpload && (
           <div className="flex flex-col items-center justify-center ">
