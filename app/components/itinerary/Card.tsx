@@ -24,7 +24,7 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
     etb: card.endTime?.slice(0, 2),
     ete: card.endTime?.slice(2, 4),
   });
-
+  console.log(card);
   const handleDelete = () => {
     axios
       .delete("/api/removeCard", {
