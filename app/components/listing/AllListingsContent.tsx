@@ -1,0 +1,40 @@
+"use client";
+import useListingModal from "@/app/hooks/useListingModal";
+import { SafeCategory, SafeListing } from "@/types";
+import React from "react";
+import { IoMdAdd } from "react-icons/io";
+import AllListings from "./AllListings";
+import ListingModal from "../modals/ListingModal";
+import EmptyState from "../EmptyState";
+
+interface AllListingContentProp {
+  listings: SafeListing[];
+  categories?: SafeCategory[];
+}
+const AllListingsContent: React.FC<AllListingContentProp> = ({
+  listings,
+  categories,
+}) => {
+  const listingModal = useListingModal();
+
+  return (
+    <div className=" w-full">
+      <div className="flex gap-4 ">
+        <div
+          onClick={listingModal.onOpen}
+          className="hover:bg-neutral-400 hover:text-white hover:cursor-pointer min-w-[175px] h-[180px] border-2 border-neutral-200  rounded-xl shadow-md flex items-center justify-center"
+        >
+          <IoMdAdd size={28} />
+        </div>
+        <AllListings listings={listings} />
+      </div>
+
+      <div className="w-full flex items-center justify-center">
+        {listings?.length === 0 && <EmptyState title="No listings yet" />}
+      </div>
+      <ListingModal categories={categories} />
+    </div>
+  );
+};
+
+export default AllListingsContent;
