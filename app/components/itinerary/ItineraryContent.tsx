@@ -39,6 +39,8 @@ const ItineraryContent: React.FC<ItinProps> = ({
   const { startDate, endDate, cards, createdAt, container, id } =
     currentItinerary;
 
+  console.log("currentItinerary:", currentItinerary);
+
   const initialDateRange = {
     startDate: new Date(startDate),
     endDate: new Date(endDate),
