@@ -16,7 +16,7 @@ export default async function MainLayout({
   children: React.ReactNode;
 }) {
   const currentUser = await getCurrentUser();
-
+  console.log("currentUser", currentUser);
   return (
     <div>
       <ToasterProvider />
