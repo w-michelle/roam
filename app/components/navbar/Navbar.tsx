@@ -18,6 +18,9 @@ const Navbar: React.FC<NavbarProps> = async ({ currentUser }) => {
     return <NoUser />;
   }
   const cart = await getCart(currentUser?.id);
+  if (!cart) {
+    return null;
+  }
   return (
     <div className="flex justify-between items-center p-3 border-b-[1px]">
       <Logo />
