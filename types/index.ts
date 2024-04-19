@@ -27,7 +27,7 @@ export type SafeListing = Omit<Listing, "createdAt"> & {
   images: Image[];
 };
 
-export type SafeCart = Omit<Cart, "createdAt"> & {
+export type SafeCart = Omit<Cart, "createdAt" | "listings"> & {
   createdAt: string;
   listings: SafeListing[];
 };

@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
 
 interface CartModalProp {
-  cart: SafeCart;
+  cart?: SafeCart | null;
 }
 
 const CartModal: React.FC<CartModalProp> = ({ cart }) => {
