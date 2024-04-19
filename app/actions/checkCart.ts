@@ -5,10 +5,12 @@ export default async function getCart() {
   if (!currentUser) {
     return null;
   }
+
   const cart = await prisma?.cart.findFirst({
     where: { userId: currentUser.id },
     include: { listings: { include: { images: true } } },
   });
+  console.log(cart);
   if (cart) {
     const safeCart = { ...cart, createdAt: cart.createdAt.toISOString() };
     return safeCart;

@@ -3,8 +3,8 @@ import prisma from "@/app/libs/prismadb";
 import authOptions from "../api/auth/[...nextauth]/options";
 
 export default async function getCurrentUser() {
+  const session = await getServerSession(authOptions);
   try {
-    const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
       return null;
     }
