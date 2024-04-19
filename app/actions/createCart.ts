@@ -1,4 +1,5 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import prisma from "@/app/libs/prismadb";
 export default async function createCart() {
   const currentUser = await getCurrentUser();
 
