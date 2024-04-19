@@ -12,7 +12,7 @@ import CartModal from "../modals/CartModal";
 interface NavbarProps {
   currentUser: SafeUser | null;
 }
-export const dynamic = "force-dynamic";
+
 const Navbar: React.FC<NavbarProps> = async ({ currentUser }) => {
   if (!currentUser) {
     return <NoUser />;
