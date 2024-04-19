@@ -9,6 +9,7 @@ import ToasterProvider from "../../providers/ToasterProvider";
 import getCurrentUser from "../../actions/getCurrentUser";
 import CategoryModal from "../../components/modals/CategoryModal";
 import Categorybar from "../../components/category/Categorybar";
+import ClientOnly from "@/app/components/ClientOnly";
 
 export default async function MainLayout({
   children,
@@ -24,8 +25,10 @@ export default async function MainLayout({
       <CategoryModal />
       <LoginModal />
       <RegisterModal />
-      <Navbar currentUser={currentUser} />
-      <Categorybar currentUser={currentUser} />
+      <ClientOnly>
+        <Navbar currentUser={currentUser} />
+        <Categorybar currentUser={currentUser} />
+      </ClientOnly>
       {children}
     </div>
   );
