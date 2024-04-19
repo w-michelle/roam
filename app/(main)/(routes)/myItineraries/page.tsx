@@ -3,6 +3,7 @@ import { formatCalDate, formatSingleDate } from "@/utils/formatDate";
 import Link from "next/link";
 import React from "react";
 
+export const dynamic = "force-dynamic";
 const MyItineraries = async () => {
   const allItins = await getAllItins();
 
