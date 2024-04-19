@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCart from "@/app/actions/checkCart";
 import createCart from "@/app/actions/createCart";
+
+export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   const listing = await request.json();
 
