@@ -10,7 +10,7 @@ import getCurrentUser from "../../actions/getCurrentUser";
 import CategoryModal from "../../components/modals/CategoryModal";
 import Categorybar from "../../components/category/Categorybar";
 import ClientOnly from "@/app/components/ClientOnly";
-
+export const dynamic = "force-dynamic";
 export default async function MainLayout({
   children,
 }: {
