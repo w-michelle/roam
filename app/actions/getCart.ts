@@ -54,6 +54,6 @@ export default async function getCart(userId: string) {
       return safeCart;
     }
   } catch (error: any) {
-    return null;
+    throw new Error(error);
   }
 }
