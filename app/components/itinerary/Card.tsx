@@ -62,9 +62,9 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
           <div
             {...provided.draggableProps}
             ref={provided.innerRef}
-            className="flex items-center w-full gap-6"
+            className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6"
           >
-            <div className="flex bg-cusGrayBg/30 border-[1px] border-cusBorder text-cusText px-3 py-2 text-xs rounded-2xl">
+            <div className="flex items-center w-[100px]  bg-cusGrayBg/30 border-[1px] border-cusBorder text-cusText px-3 py-2 text-xs rounded-2xl">
               <select
                 onChange={(e) => handleStartFirst("stb", e.target.value)}
                 value={timeSlot.stb}
@@ -161,47 +161,51 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
                 <option value="50">50</option>
               </select>
             </div>
-            <div className=" relative w-[100px] h-[100px]">
-              {found ? (
-                <Image
-                  src={found?.listing.images[0].url}
-                  alt="List Item Image"
-                  fill
-                  className="object-cover"
+            <div className="flex items-center gap-2 justify-between w-full">
+              <div className=" relative w-[50px] h-[50px]">
+                {found ? (
+                  <Image
+                    src={found?.listing.images[0].url}
+                    alt="List Item Image"
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={"/placeholder.png"}
+                    alt="List Item Image"
+                    fill
+                    className="object-cover"
+                  />
+                )}
+              </div>
+              <div>
+                <div>{card.listing.title}</div>
+                <div className="text-cusText">{card.listing.description}</div>
+              </div>
+              <div
+                className="cursor-pointer relative"
+                onClick={() => setToggleDelete(!toggleDelete)}
+              >
+                <IoIosMore className="text-cusText/50 hover:text-cusText" />
+                {toggleDelete && (
+                  <div
+                    className="absolute rounded-md p-2 bg-red-400/20 hover:bg-red-800 hover:text-red-400"
+                    onClick={handleDelete}
+                  >
+                    <div>Delete</div>
+                  </div>
+                )}
+              </div>
+              <div
+                {...provided.dragHandleProps}
+                className="ml-auto cursor-move"
+              >
+                <RiDraggable
+                  size={20}
+                  className="text-cusText/30 hover:text-cusText"
                 />
-              ) : (
-                <Image
-                  src={"/placeholder.png"}
-                  alt="List Item Image"
-                  fill
-                  className="object-cover"
-                />
-              )}
-            </div>
-            <div>
-              <div>{card.listing.title}</div>
-              <div className="text-cusText">{card.listing.description}</div>
-            </div>
-            <div
-              className="cursor-pointer relative"
-              onClick={() => setToggleDelete(!toggleDelete)}
-            >
-              <IoIosMore className="text-cusText/50 hover:text-cusText" />
-              {toggleDelete && (
-                <div
-                  className="absolute rounded-md p-2 bg-red-400/20 hover:bg-red-800 hover:text-red-400"
-                  onClick={handleDelete}
-                >
-                  <div>Delete</div>
-                </div>
-              )}
-            </div>
-
-            <div {...provided.dragHandleProps} className="ml-auto cursor-move">
-              <RiDraggable
-                size={20}
-                className="text-cusText/30 hover:text-cusText"
-              />
+              </div>
             </div>
           </div>
         )}

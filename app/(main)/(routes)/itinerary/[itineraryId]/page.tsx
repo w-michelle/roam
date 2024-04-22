@@ -11,7 +11,7 @@ const ItineraryPage = async ({ params }: { params: IParams }) => {
   const currentItinerary = await getItinerary(params.itineraryId);
   const currentUser = await getCurrentUser();
   if (!currentUser || !currentItinerary) {
-    return <EmptyState title="Error: Itinerary does not exist" />;
+    return <EmptyState title="Itinerary does not exist" />;
   }
 
   return (

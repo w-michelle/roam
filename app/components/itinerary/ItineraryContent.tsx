@@ -260,7 +260,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
   return (
     <div className="relative p-3 mb-4 max-w-screen-lg mx-auto">
       <div className="mt-4 flex items-center justify-center gap-2">
-        <div className="flex flex-col items-center justify-center gap-2 flex-1">
+        <div className="flex flex-col items-center justify-center gap-2 w-full  text-center">
           <input
             className="text-center"
             type="text"
@@ -310,7 +310,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
           </div>
         )}
       </div>
-      <div className="mt-8 flex items-center justify-between ">
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row items-center justify-between ">
         {/*  date dropdown*/}
         <div>
           <div
@@ -386,7 +386,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
                                 {...provided.droppableProps}
                               >
                                 {/* cards */}
-                                <div className="mt-8 flex flex-col gap-8">
+                                <div className="mt-8 flex flex-col gap-8 overflow-x-auto">
                                   {container.cards?.map(
                                     (card: any, index: any) => (
                                       <div

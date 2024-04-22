@@ -19,7 +19,7 @@ const AllListingsContent: React.FC<AllListingContentProp> = ({
 
   return (
     <div className=" w-full">
-      <div className="flex gap-4 ">
+      <div className="flex flex-col sm:flex-row gap-4 ">
         <div
           onClick={listingModal.onOpen}
           className="hover:bg-neutral-400 hover:text-white hover:cursor-pointer min-w-[175px] h-[180px] border-2 border-neutral-200  rounded-xl shadow-md flex items-center justify-center"

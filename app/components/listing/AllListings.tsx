@@ -43,7 +43,7 @@ const AllListings: React.FC<AllListingProps> = ({ listings }) => {
   };
 
   return (
-    <div className="flex gap-4 flex-wrap">
+    <div className="flex justify-center sm:justify-start gap-4 flex-wrap">
       {listings.map((listing) => (
         <div
           key={listing.id}

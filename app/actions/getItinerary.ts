@@ -22,7 +22,7 @@ export default async function getItinerary(id: string) {
     }
 
     const itinerary = await prisma?.itinerary.findUnique({
-      where: { id: id },
+      where: { id: id, userId: currentUser.id },
       include: {
         cards: {
           include: { listing: { include: { images: true } } },

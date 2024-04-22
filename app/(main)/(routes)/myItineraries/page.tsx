@@ -3,10 +3,16 @@ import Link from "next/link";
 import React from "react";
 
 import ItinContent from "./ItinContent";
+import { all } from "axios";
+import EmptyState from "@/app/components/EmptyState";
 
 export const dynamic = "force-dynamic";
 const MyItineraries = async () => {
   const allItins = await getAllItins();
+
+  if (allItins.length == 0) {
+    return <EmptyState title="No Itineraries" />;
+  }
 
   return (
     <div className="relative p-3 my-8 max-w-screen-lg mx-auto h-screen">

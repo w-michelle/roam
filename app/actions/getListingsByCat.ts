@@ -1,6 +1,7 @@
 import prisma from "@/app/libs/prismadb";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import getCurrentUser from "./getCurrentUser";
 
 const s3Client = new S3Client({
   region: "ca-central-1",
@@ -11,9 +12,13 @@ const s3Client = new S3Client({
 });
 export const dynamic = "force-dynamic";
 export default async function getListingsByCat(catId: string) {
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    return null;
+  }
   try {
     const listings = await prisma?.listing.findMany({
-      where: { category: catId },
+      where: { category: catId, userId: currentUser.id },
       include: {
         images: true,
       },

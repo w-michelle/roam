@@ -15,12 +15,17 @@ const s3Client = new S3Client({
 });
 export const dynamic = "force-dynamic";
 export default async function getListing(params: IParams) {
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    return null;
+  }
   try {
     const { listingId } = params;
 
     const listing = await prisma?.listing.findFirst({
       where: {
         id: listingId,
+        userId: currentUser.id,
       },
       include: {
         images: true,
