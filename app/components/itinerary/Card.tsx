@@ -13,9 +13,15 @@ import { useRouter } from "next/navigation";
 interface CardProps {
   card: SafeCard;
   index: number;
+  cards: SafeCard[];
 }
 
-const Card: React.FC<CardProps> = ({ card, index }) => {
+const Card: React.FC<CardProps> = ({ card, index, cards }) => {
+  console.log("current card:", card);
+  console.log("all cards:", cards);
+
+  const found = cards.find((item) => item.id == card.id);
+
   const [toggleDelete, setToggleDelete] = useState(false);
   const router = useRouter();
   const [timeSlot, setTimeSlot] = useState({
@@ -24,7 +30,7 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
     etb: card.endTime?.slice(0, 2),
     ete: card.endTime?.slice(2, 4),
   });
-  console.log(card);
+
   const handleDelete = () => {
     axios
       .delete("/api/removeCard", {
@@ -156,12 +162,21 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
               </select>
             </div>
             <div className=" relative w-[100px] h-[100px]">
-              <Image
-                src={card.listing.images[0].url || "/placeholder.png"}
-                alt="List Item Image"
-                fill
-                className="object-cover"
-              />
+              {found ? (
+                <Image
+                  src={found?.listing.images[0].url}
+                  alt="List Item Image"
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <Image
+                  src={"/placeholder.png"}
+                  alt="List Item Image"
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
             <div>
               <div>{card.listing.title}</div>

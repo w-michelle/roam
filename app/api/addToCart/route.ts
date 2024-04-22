@@ -16,11 +16,10 @@ export async function POST(request: Request) {
 
   try {
     const cart = (await getCart()) ?? (await createCart());
-    console.log("addtocart cart: did we get or create?;", cart);
+
     const itemInCart = cart?.listings?.find(
       (item: any) => item.id === listing.id
     );
-    console.log("listing added to cart", listing);
 
     if (itemInCart) {
       return new NextResponse("Already in bucket");

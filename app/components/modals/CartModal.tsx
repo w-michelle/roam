@@ -27,8 +27,6 @@ const CartModal: React.FC<CartModalProp> = ({ cart }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
-  console.log("cart", cart);
-
   const handleClose = useCallback(() => {
     cartModal.onClose();
   }, [cartModal.isOpen]);

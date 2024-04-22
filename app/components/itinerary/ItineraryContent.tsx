@@ -8,7 +8,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import crypto from "crypto";
+
 import Card from "./Card";
 import axios from "axios";
 
@@ -19,6 +19,7 @@ import { IoIosCheckmark, IoMdClose, IoMdShare } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { useOrigin } from "@/app/hooks/use-origin";
+import { useRouter } from "next/navigation";
 
 interface ItinProps {
   currentItinerary: SafeItinerary;
@@ -39,14 +40,12 @@ const ItineraryContent: React.FC<ItinProps> = ({
   const { startDate, endDate, cards, createdAt, container, id } =
     currentItinerary;
 
-  console.log("currentItinerary:", currentItinerary);
-
   const initialDateRange = {
     startDate: new Date(startDate),
     endDate: new Date(endDate),
     key: "selection",
   };
-
+  const router = useRouter();
   const cardModal = useCardModal();
   const [title, setTitle] = useState(currentItinerary?.title || "Intinerary");
   const [titleSubmit, setTitleSubmit] = useState(false);
@@ -56,8 +55,9 @@ const ItineraryContent: React.FC<ItinProps> = ({
   const [toggleInvite, setToggleInvite] = useState(false);
   const [copied, setCopied] = useState(false);
   const [dateList, setDateList] = useState<Date[]>([]);
-  const [containersList, setContainersList] = useState<any>([]);
-
+  const [containersList, setContainersList] = useState<any[]>(container || []);
+  const [loading, setLoading] = useState(false);
+  //for invite link
   const origin = useOrigin();
   const inviteLink = `${origin}/invite/${id}`;
   const onCopy = () => {
@@ -67,61 +67,53 @@ const ItineraryContent: React.FC<ItinProps> = ({
       setCopied(false);
     }, 2000);
   };
+
   //  generate a list of dates between startDate and endDate
   const generateDateList = (startDate: Date, endDate: Date) => {
     let dates = [];
     let currentDate = new Date(startDate);
+
     while (currentDate <= endDate) {
       dates.push(new Date(currentDate));
       currentDate.setDate(currentDate.getDate() + 1);
     }
     setDateList(dates);
+
     return dates;
   };
 
-  // generate containers based on the dates provided
-  const generateContainerList = (dates: Date[]) => {
-    let containers = [];
-    for (let i = 0; i < dates.length; i++) {
-      const randomId = crypto.randomBytes(32).toString("hex");
-      if (i == 0) {
-        containers.push({ id: randomId, cards: cards });
-      } else {
-        containers.push({ id: randomId, cards: [] });
-      }
-    }
-    axios.post("/api/updateItinerary", {
-      data: { dates: dateRange, itinId: id, containers: containers },
-    });
-
-    setContainersList(containers);
-  };
-
   useEffect(() => {
-    const dates = generateDateList(dateRange.startDate!, dateRange.endDate!);
+    if (dateRange.startDate && dateRange.endDate) {
+      const dates = generateDateList(dateRange.startDate, dateRange.endDate);
 
-    if (container?.length == 0) {
-      generateContainerList(dates);
-    } else {
-      let newContainer = [];
-
-      for (let i = 0; i < dates.length; i++) {
-        if (container[i]) {
-          newContainer.push(container[i]);
-        } else {
-          const randomId = crypto.randomBytes(32).toString("hex");
-          newContainer.push({ id: randomId, cards: [] });
-        }
+      if (containersList.length == dates.length) {
+        return;
+      } else {
+        const generateContainerList = (dates: Date[]) => {
+          axios
+            .post("/api/updateItinerary", {
+              data: {
+                dates: dateRange,
+                dateLen: dates.length,
+                itinId: id,
+                containers: containersList,
+                cards: cards,
+              },
+            })
+            .then((result: any) => {
+              toast.success("Dates Updated");
+              setContainersList(result.data);
+            })
+            .catch(() => {
+              toast.error("Something went wrong");
+            });
+        };
+        generateContainerList(dates);
       }
-
-      //update itin dates
-      axios.post("/api/updateItinerary", {
-        data: { dates: dateRange, itinId: id, containers: newContainer },
-      });
-
-      setContainersList(newContainer);
     }
   }, [dateRange]);
+
+  //when container or card is moved
 
   const onDragEnd = (result: any) => {
     const { destination, source, type } = result;
@@ -146,9 +138,16 @@ const ItineraryContent: React.FC<ItinProps> = ({
       ).map((item: any, index) => ({ ...item, order: index }));
       setContainersList(items);
 
-      axios.post("/api/updateContainer", {
-        data: { dates: dateList, containers: items, itinId: id },
-      });
+      axios
+        .post("/api/updateContainer", {
+          data: { dates: dateList, containers: items, itinId: id },
+        })
+        .then(() => {
+          toast.success("Containers updated!");
+        })
+        .catch(() => {
+          toast.error("Something went wrong");
+        });
     }
 
     if (type === "card") {
@@ -214,13 +213,20 @@ const ItineraryContent: React.FC<ItinProps> = ({
         });
         setContainersList(newOrderedData);
 
-        axios.post("/api/updateContainer", {
-          data: {
-            dates: dateList,
-            itinId: id,
-            containers: newOrderedData,
-          },
-        });
+        axios
+          .post("/api/updateCardDiff", {
+            data: {
+              source: sourceList,
+              dest: destList,
+              itinId: id,
+            },
+          })
+          .then(() => {
+            toast.success("Card moved");
+          })
+          .catch(() => {
+            toast.error("Something went wrong");
+          });
       }
     }
   };
@@ -360,7 +366,9 @@ const ItineraryContent: React.FC<ItinProps> = ({
                       >
                         <div className="flex justify-between">
                           <h3 className="text-cusText text-sm ">
-                            {formatSingleDate(new Date(dateList[index]))}
+                            {dateList[index] === undefined
+                              ? formatSingleDate(new Date(startDate))
+                              : formatSingleDate(new Date(dateList[index]))}
                           </h3>
                           <div {...provided.dragHandleProps}>
                             <RiDraggable
@@ -369,7 +377,6 @@ const ItineraryContent: React.FC<ItinProps> = ({
                             />
                           </div>
                         </div>
-
                         <div>
                           {/* droppable card area */}
                           <Droppable droppableId={container.id} type="card">
@@ -386,7 +393,11 @@ const ItineraryContent: React.FC<ItinProps> = ({
                                         key={card.id}
                                         className="flex p-3 items-center gap-4 hover:bg-cusGrayBg/30 hover:rounded-2xl"
                                       >
-                                        <Card card={card} index={index} />
+                                        <Card
+                                          card={card}
+                                          index={index}
+                                          cards={cards}
+                                        />
                                       </div>
                                     )
                                   )}

@@ -44,6 +44,7 @@ const LoginModal = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log("LOGINCREDNTIALS", data);
     setIsLoading(true);
     signIn("credentials", {
       ...data,

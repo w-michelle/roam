@@ -10,14 +10,14 @@ import getCurrentUser from "../../actions/getCurrentUser";
 import CategoryModal from "../../components/modals/CategoryModal";
 import Categorybar from "../../components/category/Categorybar";
 import ClientOnly from "@/app/components/ClientOnly";
-export const dynamic = "force-dynamic";
+
 export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const currentUser = await getCurrentUser();
-  console.log("currentUser", currentUser);
+
   return (
     <div>
       <ToasterProvider />
@@ -25,10 +25,10 @@ export default async function MainLayout({
       <CategoryModal />
       <LoginModal />
       <RegisterModal />
-      <ClientOnly>
-        <Navbar currentUser={currentUser} />
-        <Categorybar currentUser={currentUser} />
-      </ClientOnly>
+
+      <Navbar currentUser={currentUser} />
+      <Categorybar currentUser={currentUser} />
+
       {children}
     </div>
   );

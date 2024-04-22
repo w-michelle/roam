@@ -122,7 +122,7 @@ const RegisterModal = () => {
                 <input
                   type="submit"
                   disabled={isLoading}
-                  value="Login"
+                  value="Register"
                   className="relative py-3 text-white w-full rounded-lg border-2  hover:bg-cusGreen/80 bg-cusGreen disabled:bg-cusGreen/30"
                 />
               </div>

@@ -12,7 +12,7 @@ export default async function getCart() {
     where: { userId: currentUser.id },
     include: { listings: { include: { images: true } } },
   });
-  console.log(cart);
+
   if (cart) {
     const safeCart = { ...cart, createdAt: cart.createdAt.toISOString() };
     return safeCart;

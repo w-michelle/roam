@@ -29,7 +29,13 @@ export default async function getItinerary(id: string) {
         },
         container: {
           include: {
-            cards: { include: { listing: { include: { images: true } } } },
+            cards: {
+              include: { listing: { include: { images: true } } },
+              orderBy: { order: "asc" },
+            },
+          },
+          orderBy: {
+            order: "asc",
           },
         },
       },

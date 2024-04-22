@@ -15,12 +15,10 @@ const ItineraryPage = async ({ params }: { params: IParams }) => {
   }
 
   return (
-    <>
-      <ItineraryContent
-        currentItinerary={currentItinerary}
-        currentUser={currentUser}
-      />
-    </>
+    <ItineraryContent
+      currentItinerary={currentItinerary}
+      currentUser={currentUser}
+    />
   );
 };
 

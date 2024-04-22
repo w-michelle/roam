@@ -55,7 +55,6 @@ const ListingModal: React.FC<ListingModalProps> = ({ categories }) => {
   } = useForm<FormData>({ resolver: yupResolver(schema) });
 
   const selectedId = watch("categoryId");
-  const selectedImages = watch("images");
 
   const handleChange = (e: any) => {
     setImages([...e.target.files]);
