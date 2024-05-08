@@ -259,7 +259,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
 
   return (
     <div className="relative p-3 mb-4 max-w-screen-lg mx-auto">
-      <div className="mt-4 flex items-center justify-center gap-2">
+      <div className="mt-4 flex items-center justify-center ">
         <div className="flex flex-col items-center justify-center gap-2 w-full  text-center">
           <input
             className="text-center"
@@ -279,13 +279,13 @@ const ItineraryContent: React.FC<ItinProps> = ({
           )}
         </div>
         <div
-          className="cursor-pointer ml-auto"
+          className="absolute right-2 cursor-pointer ml-auto"
           onClick={() => setToggleInvite(!toggleInvite)}
         >
           <IoMdShare size={20} className="text-neutral-600" />
         </div>
         {toggleInvite && (
-          <div className="absolute top-20 right-0 rounded-lg bg-neutral-700 shadow-xl p-4">
+          <div className="absolute w-[300px] top-20 right-0 rounded-lg bg-cusGreen shadow-xl p-2 z-10">
             <div
               className="cursor-pointer"
               onClick={() => setToggleInvite(!toggleInvite)}
@@ -294,7 +294,9 @@ const ItineraryContent: React.FC<ItinProps> = ({
             </div>
             <div className="text-white text-center mb-2">Invite</div>
             <div className="flex items-center gap-4 mb-4 mx-4">
-              <div className="bg-white p-3 rounded-md">{inviteLink}</div>
+              <div className="overflow-x-auto bg-white p-3 rounded-md">
+                {inviteLink}
+              </div>
               <div className="cursor-pointer">
                 {copied ? (
                   <IoIosCheckmark size={28} className="text-white" />

@@ -17,9 +17,6 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ card, index, cards }) => {
-  console.log("current card:", card);
-  console.log("all cards:", cards);
-
   const found = cards.find((item) => item.id == card.id);
 
   const [toggleDelete, setToggleDelete] = useState(false);
