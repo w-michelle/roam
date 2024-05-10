@@ -19,6 +19,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
+  const navToItin = () => {
+    router.push("/myItineraries");
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="">
       <div
@@ -35,7 +40,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           {currentUser ? (
             <div className="flex flex-col gap-2 cursor-pointer z-5">
               <div
-                onClick={() => router.push("/myItineraries")}
+                onClick={navToItin}
                 className="hover:bg-neutral-100 transition px-4 py-2"
               >
                 My Itineraries

@@ -285,7 +285,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
           <IoMdShare size={20} className="text-neutral-600" />
         </div>
         {toggleInvite && (
-          <div className="absolute w-[300px] top-20 right-0 rounded-lg bg-cusGreen shadow-xl p-2 z-10">
+          <div className="absolute w-[300px] top-20 right-3 rounded-lg bg-cusGreen shadow-xl p-2 z-10">
             <div
               className="cursor-pointer"
               onClick={() => setToggleInvite(!toggleInvite)}

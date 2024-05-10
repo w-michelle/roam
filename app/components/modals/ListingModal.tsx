@@ -186,7 +186,7 @@ const ListingModal: React.FC<ListingModalProps> = ({ categories }) => {
   }
   return (
     <div className="flex items-center justify-center fixed inset-0 bg-neutral-800/70 z-10">
-      <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto">
+      <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto">
         <div>
           <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1px]">
