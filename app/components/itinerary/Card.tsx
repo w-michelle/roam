@@ -9,6 +9,7 @@ import { RiDraggable } from "react-icons/ri";
 import { IoIosMore } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface CardProps {
   card: SafeCard;
@@ -159,7 +160,7 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
               </select>
             </div>
             <div className="flex items-center gap-2 justify-between w-full">
-              <div className=" relative w-[50px] h-[50px]">
+              <div className=" relative w-[50px] h-[50px] ml-2">
                 {found ? (
                   <Image
                     src={found?.listing.images[0].url}
@@ -177,7 +178,10 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
                 )}
               </div>
               <div>
-                <div>{card.listing.title}</div>
+                <Link href={`/listing/${card.listingId}`}>
+                  <div className="hover:underline">{card.listing.title}</div>
+                </Link>
+
                 <div className="text-cusText">{card.listing.description}</div>
               </div>
               <div
@@ -187,7 +191,7 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
                 <IoIosMore className="text-cusText/50 hover:text-cusText" />
                 {toggleDelete && (
                   <div
-                    className="absolute rounded-md p-2 bg-red-400/20 hover:bg-red-800 hover:text-red-400"
+                    className="absolute rounded-md p-2 bg-red-400/50 hover:bg-red-800 hover:text-red-400"
                     onClick={handleDelete}
                   >
                     <div>Delete</div>

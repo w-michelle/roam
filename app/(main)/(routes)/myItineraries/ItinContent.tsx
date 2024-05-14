@@ -2,6 +2,7 @@
 import { formatCalDate } from "@/utils/formatDate";
 import { Itinerary } from "@prisma/client";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
@@ -11,6 +12,7 @@ interface ItinContentProp {
 }
 
 const ItinContent: React.FC<ItinContentProp> = ({ item }) => {
+  const router = useRouter();
   const handleDelete = (itinId: string) => {
     axios
       .delete("/api/deleteItinerary", { data: { id: itinId } })

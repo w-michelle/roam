@@ -31,7 +31,7 @@ const CategoryContent: React.FC<CategoryContentProps> = ({
   };
   return (
     <div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 overflow-x-auto">
         <div
           onClick={categoryModal.onOpen}
           className="cursor-pointer rounded-lg p-3 border-[2px] border-neutral-400 w-[50px] h-[50px] flex items-center justify-center"

@@ -20,6 +20,7 @@ import { IoCopyOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { useOrigin } from "@/app/hooks/use-origin";
 import { useRouter } from "next/navigation";
+import Loader from "../Loader";
 
 interface ItinProps {
   currentItinerary: SafeItinerary;
@@ -51,6 +52,8 @@ const ItineraryContent: React.FC<ItinProps> = ({
   const [titleSubmit, setTitleSubmit] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
+  const [datesSelected, setDatesSelected] = useState(false);
+
   const [toggleCal, setToggleCal] = useState(false);
   const [toggleInvite, setToggleInvite] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -68,7 +71,6 @@ const ItineraryContent: React.FC<ItinProps> = ({
     }, 2000);
   };
 
-  //  generate a list of dates between startDate and endDate
   const generateDateList = (startDate: Date, endDate: Date) => {
     let dates = [];
     let currentDate = new Date(startDate);
@@ -83,35 +85,52 @@ const ItineraryContent: React.FC<ItinProps> = ({
   };
 
   useEffect(() => {
-    if (dateRange.startDate && dateRange.endDate) {
-      const dates = generateDateList(dateRange.startDate, dateRange.endDate);
+    let dates = generateDateList(dateRange.startDate!, dateRange.endDate!);
+    let itineraryStartDate = formatSingleDate(new Date(startDate));
+    let dateRangeStartDate = formatSingleDate(dateRange?.startDate!);
+    let itineraryEndDate = formatSingleDate(new Date(endDate));
+    let dateRangeEndDate = formatSingleDate(dateRange?.endDate!);
 
-      if (containersList.length == dates.length) {
-        return;
-      } else {
-        const generateContainerList = (dates: Date[]) => {
-          axios
-            .post("/api/updateItinerary", {
-              data: {
-                dates: dateRange,
-                dateLen: dates.length,
-                itinId: id,
-                containers: containersList,
-                cards: cards,
-              },
-            })
-            .then((result: any) => {
-              toast.success("Dates Updated");
-              setContainersList(result.data);
-            })
-            .catch(() => {
-              toast.error("Something went wrong");
-            });
-        };
-        generateContainerList(dates);
-      }
+    if (
+      container.length == 0 ||
+      itineraryStartDate !== dateRangeStartDate ||
+      itineraryEndDate !== dateRangeEndDate
+    ) {
+      const generateContainerList = (dates: Date[]) => {
+        axios
+
+          .post("/api/updateItinerary", {
+            data: {
+              dates: dateRange,
+              dateLen: dates.length,
+              itinId: id,
+              containers: containersList,
+              cards: cards,
+            },
+          })
+          .then((result: any) => {
+            toast.success("Dates Updated");
+            setContainersList(result.data);
+            setDatesSelected(false);
+          })
+          .catch(() => {
+            toast.error("Something went wrong");
+          })
+          .finally(() => {});
+      };
+      generateContainerList(dates);
     }
-  }, [dateRange]);
+  }, [datesSelected]);
+
+  const handleDateChange = (range: any) => {
+    const { selection } = range;
+
+    if (selection.startDate && selection.endDate) {
+      console.log(selection.startDate, selection.endDate);
+      setDatesSelected(true);
+      setDateRange(selection);
+    }
+  };
 
   //when container or card is moved
 
@@ -235,6 +254,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
     setTitleSubmit(true);
     setTitle(event.target.value);
   };
+
   const handleInputFocus = () => {
     setIsFocused(true);
   };
@@ -331,10 +351,11 @@ const ItineraryContent: React.FC<ItinProps> = ({
                 ranges={[dateRange]}
                 rangeColors={["#60956e"]}
                 date={new Date()}
-                onChange={(value) => setDateRange(value.selection)}
+                onChange={handleDateChange}
                 direction="vertical"
                 showDateDisplay={false}
                 minDate={new Date()}
+                moveRangeOnFirstSelection={false}
               />
             </div>
           )}
@@ -369,7 +390,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
                         <div className="flex justify-between">
                           <h3 className="text-cusText text-sm ">
                             {dateList[index] === undefined
-                              ? formatSingleDate(new Date(startDate))
+                              ? ""
                               : formatSingleDate(new Date(dateList[index]))}
                           </h3>
                           <div {...provided.dragHandleProps}>
