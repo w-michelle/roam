@@ -4,28 +4,37 @@ import useLoginModal from "../hooks/useLoginModal";
 import useRegisterModal from "../hooks/useRegisterModal";
 import Logo from "./navbar/Logo";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
-const NoUser = () => {
+import { useState } from "react";
+
+import Loader from "./Loader";
+
+const Auth = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const router = useRouter();
-  const handleGuest = () => {
-    signIn("credentials", {
-      email: "roamguest@roamwith.com",
-      password: "roamwith2024@",
-      redirect: false,
-    }).then((callback) => {
-      if (callback?.ok) {
+  const [loading, setLoading] = useState(false);
+
+  const handleGuest = async () => {
+    console.log("starting");
+    setLoading(true);
+    try {
+      const response = await signIn("credentials", {
+        email: "roamguest@roamwith.com",
+        password: "roamwith2024@",
+        redirect: true,
+      });
+      if (response?.ok) {
         toast.success("Welcome");
         window.location.reload();
       }
-      if (callback?.error) {
-        toast.error(callback.error);
-      }
-    });
+    } catch (error) {
+      toast.error(`${error}`);
+    }
+    setLoading(false);
   };
-
+  if (loading) {
+    <Loader />;
+  }
   return (
     <div className="max-w-screen-lg mx-auto flex flex-col gap-4 items-center justify-center h-screen">
       <Logo />
@@ -51,4 +60,4 @@ const NoUser = () => {
   );
 };
 
-export default NoUser;
+export default Auth;

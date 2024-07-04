@@ -6,7 +6,7 @@ import Cart from "./Cart";
 import UserMenu from "./UserMenu";
 import { SafeUser } from "@/types";
 import getCart from "@/app/actions/getCart";
-import NoUser from "../NoUser";
+import Auth from "../Auth";
 import CartModal from "../modals/CartModal";
 
 interface NavbarProps {
@@ -15,7 +15,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = async ({ currentUser }) => {
   if (!currentUser) {
-    return <NoUser />;
+    return <Auth />;
   }
   const cart = await getCart(currentUser?.id);
 

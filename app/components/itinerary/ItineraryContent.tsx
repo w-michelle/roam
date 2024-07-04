@@ -305,16 +305,16 @@ const ItineraryContent: React.FC<ItinProps> = ({
           <IoMdShare size={20} className="text-neutral-600" />
         </div>
         {toggleInvite && (
-          <div className="absolute w-[300px] top-20 right-3 rounded-lg bg-cusGreen shadow-xl p-2 z-10">
+          <div className="absolute w-[300px] md:w-[500px] top-20 right-3 rounded-md bg-cusText shadow-xl p-2 z-10">
             <div
               className="cursor-pointer"
               onClick={() => setToggleInvite(!toggleInvite)}
             >
-              <IoMdClose size={20} className="text-white" />
+              <IoMdClose size={20} className="text-white ml-auto" />
             </div>
             <div className="text-white text-center mb-2">Invite</div>
-            <div className="flex items-center gap-4 mb-4 mx-4">
-              <div className="overflow-x-auto bg-white p-3 rounded-md">
+            <div className="flex items-center gap-4 mb-2 mx-2">
+              <div className="overflow-x-auto bg-white p-2 rounded-sm">
                 {inviteLink}
               </div>
               <div className="cursor-pointer">

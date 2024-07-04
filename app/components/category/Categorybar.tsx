@@ -4,14 +4,14 @@ import getCategory from "../../actions/getCategory";
 
 import CategoryClient from "./CategoryClient";
 import { SafeCategory, SafeUser } from "@/types";
-import NoUser from "../NoUser";
+import Auth from "../Auth";
 
 interface CategorybarProps {
   currentUser?: SafeUser | null;
 }
 const Categorybar: React.FC<CategorybarProps> = async ({ currentUser }) => {
   if (!currentUser) {
-    return <NoUser />;
+    return <Auth />;
   }
   const categories = await getCategory(currentUser?.id);
 

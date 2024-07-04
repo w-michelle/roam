@@ -1,14 +1,16 @@
 import getAllListing from "../../actions/getAllListings";
 import getCategory from "../../actions/getCategory";
 import getCurrentUser from "../../actions/getCurrentUser";
-import NoUser from "../../components/NoUser";
+import Auth from "../../components/Auth";
 
 import AllListingsContent from "../../components/listing/AllListingsContent";
+
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const currentUser = await getCurrentUser();
   if (!currentUser) {
-    return <NoUser />;
+    return <Auth />;
   }
 
   const listings = await getAllListing();

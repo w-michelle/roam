@@ -191,7 +191,7 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
                 <IoIosMore className="text-cusText/50 hover:text-cusText" />
                 {toggleDelete && (
                   <div
-                    className="absolute rounded-md p-2 bg-red-400/50 hover:bg-red-800 hover:text-red-400"
+                    className="absolute rounded-md p-1 text-xs bg-red-400/50 hover:bg-red-800 hover:text-red-400"
                     onClick={handleDelete}
                   >
                     <div>Delete</div>
