@@ -15,7 +15,6 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
 
   const handleGuest = async () => {
-    console.log("starting");
     setLoading(true);
     try {
       const response = await signIn("credentials", {
@@ -39,20 +38,23 @@ const Auth = () => {
     <div className="max-w-screen-lg mx-auto flex flex-col gap-4 items-center justify-center h-screen">
       <Logo />
       <button
-        className="py-2 px-6 text-xs bg-black text-white rounded-lg"
+        className="disabled:cursor-not-allowed disabled:bg-black/30 py-2 px-6 text-xs bg-black text-white rounded-lg"
+        disabled={loading}
         onClick={loginModal.onOpen}
       >
         Login
       </button>
       <button
-        className="py-2 px-6 text-xs bg-black text-white rounded-lg"
+        className="disabled:cursor-not-allowed disabled:bg-black/30 py-2 px-6 text-xs bg-black text-white rounded-lg"
+        disabled={loading}
         onClick={registerModal.onOpen}
       >
         Register
       </button>
       <button
         onClick={() => handleGuest()}
-        className="py-2 px-6 text-xs bg-cusGreen text-white rounded-lg hover:text-cusGreen hover:bg-[#16461e]"
+        disabled={loading}
+        className="disabled:cursor-not-allowed disabled:bg-cusGreen/30 py-2 px-6 text-xs bg-cusGreen text-white rounded-lg hover:text-cusGreen hover:bg-[#16461e]"
       >
         Guest Sign In
       </button>

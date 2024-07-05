@@ -126,7 +126,6 @@ const ItineraryContent: React.FC<ItinProps> = ({
     const { selection } = range;
 
     if (selection.startDate && selection.endDate) {
-      console.log(selection.startDate, selection.endDate);
       setDatesSelected(true);
       setDateRange(selection);
     }

@@ -23,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = async ({ currentUser }) => {
     <div className="flex justify-between items-center p-3 border-b-[1px]">
       <Logo />
       <div className="flex items-end gap-4">
-        <Cart />
+        <Cart cart={cart} />
         <UserMenu currentUser={currentUser} />
       </div>
       <CartModal cart={cart} />

@@ -17,7 +17,6 @@ export async function POST(request: Request) {
             },
           },
         });
-        console.log("created", i);
       } else {
         await prisma.container.create({
           data: {
@@ -27,11 +26,9 @@ export async function POST(request: Request) {
             },
           },
         });
-        console.log("created", i);
       }
     }
     for (let i = 0; i < containers.length; i++) {
-      console.log(containers);
       await prisma.container.deleteMany({
         where: { id: containers[i].id },
       });
