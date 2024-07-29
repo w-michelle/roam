@@ -11,7 +11,7 @@ interface CategorybarProps {
 }
 const Categorybar: React.FC<CategorybarProps> = async ({ currentUser }) => {
   if (!currentUser) {
-    return <Auth />;
+    return;
   }
   const categories = await getCategory(currentUser?.id);
 
