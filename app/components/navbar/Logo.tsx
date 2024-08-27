@@ -14,6 +14,7 @@ const Logo = () => {
         height="80"
         width="80"
         src="/roam.png"
+        priority={true}
       />
     </Link>
   );

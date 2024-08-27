@@ -59,7 +59,8 @@ const ItineraryContent: React.FC<ItinProps> = ({
   const [copied, setCopied] = useState(false);
   const [dateList, setDateList] = useState<Date[]>([]);
   const [containersList, setContainersList] = useState<any[]>(container || []);
-  const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [isSelecting, setIsSelecting] = useState(false);
   //for invite link
   const origin = useOrigin();
   const inviteLink = `${origin}/invite/${id}`;
@@ -97,8 +98,8 @@ const ItineraryContent: React.FC<ItinProps> = ({
       itineraryEndDate !== dateRangeEndDate
     ) {
       const generateContainerList = (dates: Date[]) => {
+        setUpdating(true);
         axios
-
           .post("/api/updateItinerary", {
             data: {
               dates: dateRange,
@@ -109,14 +110,17 @@ const ItineraryContent: React.FC<ItinProps> = ({
             },
           })
           .then((result: any) => {
-            toast.success("Dates Updated");
             setContainersList(result.data);
             setDatesSelected(false);
+
+            toast.success("Dates Updated");
           })
           .catch(() => {
             toast.error("Something went wrong");
           })
-          .finally(() => {});
+          .finally(() => {
+            setUpdating(false);
+          });
       };
       generateContainerList(dates);
     }
@@ -126,8 +130,17 @@ const ItineraryContent: React.FC<ItinProps> = ({
     const { selection } = range;
 
     if (selection.startDate && selection.endDate) {
-      setDatesSelected(true);
       setDateRange(selection);
+      console.log("selection:", selection);
+      setIsSelecting(true);
+    }
+
+    if (isSelecting && selection.startDate && selection.endDate) {
+      setTimeout(() => {
+        setDatesSelected(true);
+      }, 1000);
+
+      setIsSelecting(false);
     }
   };
 
@@ -275,6 +288,14 @@ const ItineraryContent: React.FC<ItinProps> = ({
         });
     }
   };
+
+  if (updating) {
+    return (
+      <div className="w-full absolute top-0 left-0 h-screen bg-red-200 flex items-center justify-center">
+        <p>Updating...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative p-3 mb-4 max-w-screen-lg mx-auto">

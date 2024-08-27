@@ -161,7 +161,7 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
             </div>
             <div className="flex items-center gap-2 justify-between w-full">
               <div className=" relative w-[50px] h-[50px] ml-2">
-                {found ? (
+                {found?.listing.images[0] ? (
                   <Image
                     src={found?.listing.images[0].url}
                     alt="List Item Image"
@@ -194,7 +194,7 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
                     className="absolute rounded-md p-1 text-xs bg-red-400/50 hover:bg-red-800 hover:text-red-400"
                     onClick={handleDelete}
                   >
-                    <div>Delete</div>
+                    <div>Remove</div>
                   </div>
                 )}
               </div>
