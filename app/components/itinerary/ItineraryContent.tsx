@@ -19,8 +19,9 @@ import { IoIosCheckmark, IoMdClose, IoMdShare } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { useOrigin } from "@/app/hooks/use-origin";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Loader from "../Loader";
+import getItinerary from "@/app/actions/getItinerary";
 
 interface ItinProps {
   currentItinerary: SafeItinerary;
@@ -61,6 +62,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
   const [containersList, setContainersList] = useState<any[]>(container || []);
   const [updating, setUpdating] = useState(false);
   const [isSelecting, setIsSelecting] = useState(false);
+
   //for invite link
   const origin = useOrigin();
   const inviteLink = `${origin}/invite/${id}`;
@@ -120,6 +122,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
           })
           .finally(() => {
             setUpdating(false);
+            router.refresh();
           });
       };
       generateContainerList(dates);
@@ -131,7 +134,6 @@ const ItineraryContent: React.FC<ItinProps> = ({
 
     if (selection.startDate && selection.endDate) {
       setDateRange(selection);
-      console.log("selection:", selection);
       setIsSelecting(true);
     }
 
@@ -291,7 +293,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
 
   if (updating) {
     return (
-      <div className="w-full absolute top-0 left-0 h-screen bg-red-200 flex items-center justify-center">
+      <div className="z-50 w-full absolute top-0 left-0 h-screen bg-neutral-300 backdrop-blur-sm opacity-60 flex items-center justify-center">
         <p>Updating...</p>
       </div>
     );

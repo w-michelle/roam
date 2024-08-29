@@ -6,7 +6,7 @@ import ItineraryContent from "@/app/components/itinerary/ItineraryContent";
 interface IParams {
   itineraryId: string;
 }
-
+export const dynamic = "force-dynamic";
 const ItineraryPage = async ({ params }: { params: IParams }) => {
   const currentItinerary = await getItinerary(params.itineraryId);
   const currentUser = await getCurrentUser();
