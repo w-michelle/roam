@@ -18,6 +18,8 @@ const ItinContent: React.FC<ItinContentProp> = ({ item }) => {
       .delete("/api/deleteItinerary", { data: { id: itinId } })
       .then(() => {
         toast.success("Itinerary deleted");
+        router.push("/myItineraries");
+        router.refresh();
       })
       .catch(() => {
         toast.error("Something went wrong");
@@ -25,7 +27,7 @@ const ItinContent: React.FC<ItinContentProp> = ({ item }) => {
   };
   return (
     <>
-      <li className="cursor-pointer border-b-[1px] hover:border-cusGreen border-neutral-500/70 flex justify-between px-2">
+      <li className="cursor-pointer border-b-[1px] hover:bg-cusGreen/20 border-neutral-500/70 flex justify-between px-2">
         <h3>{item.title || "Itinerary"}</h3>
         <div className="text-sm ml-auto">
           {formatCalDate(new Date(item.createdAt))}

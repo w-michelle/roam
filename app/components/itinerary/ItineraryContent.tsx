@@ -19,9 +19,9 @@ import { IoIosCheckmark, IoMdClose, IoMdShare } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { useOrigin } from "@/app/hooks/use-origin";
-import { useParams, useRouter } from "next/navigation";
-import Loader from "../Loader";
-import getItinerary from "@/app/actions/getItinerary";
+import { useRouter } from "next/navigation";
+
+import { BeatLoader } from "react-spinners";
 
 interface ItinProps {
   currentItinerary: SafeItinerary;
@@ -113,7 +113,6 @@ const ItineraryContent: React.FC<ItinProps> = ({
           })
           .then((result: any) => {
             setContainersList(result.data);
-            setDatesSelected(false);
 
             toast.success("Dates Updated");
           })
@@ -122,6 +121,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
           })
           .finally(() => {
             setUpdating(false);
+            setDatesSelected(false);
             router.refresh();
           });
       };
@@ -293,9 +293,13 @@ const ItineraryContent: React.FC<ItinProps> = ({
 
   if (updating) {
     return (
-      <div className="z-50 w-full absolute top-0 left-0 h-screen bg-neutral-300 backdrop-blur-sm opacity-60 flex items-center justify-center">
-        <p>Updating...</p>
-      </div>
+      <>
+        <div className="z-50 w-full absolute top-0 left-0 h-screen bg-neutral-300 backdrop-blur-sm opacity-60"></div>
+        <div className="z-50 w-full absolute top-0 left-0 h-screen flex flex-col gap-2 items-center justify-center">
+          <p className="">Updating</p>
+          <BeatLoader size={10} color="black" />
+        </div>
+      </>
     );
   }
 
