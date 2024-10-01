@@ -56,7 +56,7 @@ const Listing: React.FC<ListingProp> = ({
               onClick={() => handleAdd(listing)}
               className="hover:cursor-pointer hover:bg-neutral-300/30 py-1 px-3 w-full"
             >
-              ADD
+              ADD TO BUCKET
             </div>
 
             <div

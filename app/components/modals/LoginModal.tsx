@@ -1,7 +1,7 @@
 "use client";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Input from "../inputs/Input";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { IoMdClose } from "react-icons/io";
@@ -12,6 +12,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/loading";
 
 type FormData = {
   email: string;
@@ -23,6 +24,8 @@ const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
+
   const router = useRouter();
 
   const schema = yup.object().shape({
@@ -43,29 +46,72 @@ const LoginModal = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const submitLogin = () => {
     setIsLoading(true);
-    signIn("credentials", {
-      ...data,
-      redirect: false,
-    }).then((callback) => {
-      setIsLoading(false);
+    handleSubmit(onSubmit)();
+    setIsUpdated(true);
+  };
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    // Set loading state immediately
+    setIsLoading(true);
+    console.log("data:", data);
+    try {
+      setIsLoading(true);
+      const callback = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
       if (callback?.ok) {
         toast.success("Logged in");
+
         router.refresh();
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
         loginModal.onClose();
+
         reset();
-      }
-      if (callback?.error) {
+      } else if (callback?.error) {
         toast.error(callback.error);
       }
-    });
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+
+    // signIn("credentials", {s
+    //   ...data,
+    //   redirect: false,
+    // })
+    //   .then((callback) => {
+    //     if (callback?.ok) {
+    //       toast.success("Logged in");
+    //       loginModal.onClose();
+    //       reset();
+    //     }
+    //     if (callback?.error) {
+    //       toast.error(callback.error);
+    //     }
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false); // Set loading state back to false once the process is done
+    //     router.refresh();
+    //   });
   };
 
   const toggle = useCallback(() => {
     registerModal.onOpen();
     loginModal.onClose();
   }, [loginModal, registerModal]);
+
+  if (isLoading) {
+    return (
+      <div className="opacity-50 bg-neutral-400 w-full h-screen absolute top-0 left-0">
+        <Loading />
+      </div>
+    );
+  }
 
   if (!loginModal.isOpen) {
     return null;
@@ -89,7 +135,7 @@ const LoginModal = () => {
               </button>
               <div className="text-lg font-semibold">Login</div>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={submitLogin}>
               <div className=" p-6 flex-auto">
                 <div className="flex flex-col gap-4">
                   <Input
@@ -116,7 +162,7 @@ const LoginModal = () => {
                   type="submit"
                   disabled={isLoading}
                   value="Login"
-                  className="relative py-3 text-white w-full rounded-lg border-2  hover:bg-cusGreen/80 bg-cusGreen disabled:bg-cusGreen/30 disabled:cursor-not-allowed"
+                  className="hover:cursor-pointer relative py-3 text-white w-full rounded-lg border-2  hover:bg-cusGreen/80 bg-cusGreen disabled:bg-cusGreen/30 disabled:cursor-not-allowed"
                 />
               </div>
             </form>

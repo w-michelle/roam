@@ -167,6 +167,7 @@ const CategoryModal = () => {
         toast.success("New Category Created!");
         categoryModal.onClose();
         setValue("icon", "");
+        setClickedGrad(false);
         reset();
         router.refresh();
       })

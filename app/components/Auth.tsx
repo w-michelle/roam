@@ -38,14 +38,14 @@ const Auth = () => {
     <div className="max-w-screen-lg mx-auto flex flex-col gap-4 items-center justify-center h-screen">
       <Logo />
       <button
-        className="disabled:cursor-not-allowed disabled:bg-black/30 py-2 px-6 text-xs bg-black text-white rounded-lg"
+        className="disabled:cursor-not-allowed disabled:bg-black/30 py-2 px-6 text-xs bg-black text-white rounded-lg hover:text-black hover:bg-neutral-300"
         disabled={loading}
         onClick={loginModal.onOpen}
       >
         Login
       </button>
       <button
-        className="disabled:cursor-not-allowed disabled:bg-black/30 py-2 px-6 text-xs bg-black text-white rounded-lg"
+        className="disabled:cursor-not-allowed disabled:bg-black/30 py-2 px-6 text-xs bg-black text-white rounded-lg hover:text-black hover:bg-neutral-300"
         disabled={loading}
         onClick={registerModal.onOpen}
       >

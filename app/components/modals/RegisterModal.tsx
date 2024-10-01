@@ -12,6 +12,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import Loading from "@/app/loading";
 
 type FormData = {
   email: string;
@@ -70,6 +71,14 @@ const RegisterModal = () => {
     return null;
   }
 
+  if (isLoading) {
+    return (
+      <div className="opacity-50 bg-neutral-400 w-full h-screen absolute top-0 left-0">
+        <Loading />
+      </div>
+    );
+  }
+
   return (
     <div className="absolute flex items-center justify-center inset-0 bg-neutral-800/70 ">
       <div className="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto">
@@ -123,7 +132,7 @@ const RegisterModal = () => {
                   type="submit"
                   disabled={isLoading}
                   value="Register"
-                  className="relative py-3 text-white w-full rounded-lg border-2  hover:bg-cusGreen/80 bg-cusGreen disabled:bg-cusGreen/30"
+                  className="hover:cursor-pointer relative py-3 text-white w-full rounded-lg border-2  hover:bg-cusGreen/80 bg-cusGreen disabled:bg-cusGreen/30 disabled:cursor-not-allowed"
                 />
               </div>
             </form>

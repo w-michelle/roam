@@ -90,9 +90,9 @@ const ListingClient: React.FC<ListingClientProps> = ({
       <button
         onClick={() => handleAddToCart()}
         disabled={isLoading}
-        className="ml-auto text-sm mb-4 py-2 w-[100px] bg-[#ade4bc] disabled:cursor-not-allowed hover:bg-[#60956e] hover:text-[#ade4bc] flex justify-center rounded-lg gap-2 items-center"
+        className="ml-auto text-sm mb-4 py-2 w-[150px] bg-[#ade4bc] disabled:cursor-not-allowed hover:bg-[#60956e] hover:text-[#ade4bc] flex justify-center rounded-lg gap-2 items-center"
       >
-        ADD
+        ADD TO BUCKET
       </button>
       <div className="flex flex-col gap-4">
         <div className="flex gap-4 mb-4">
