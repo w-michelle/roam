@@ -46,12 +46,6 @@ const LoginModal = () => {
     resolver: yupResolver(schema),
   });
 
-  const submitLogin = () => {
-    setIsLoading(true);
-    handleSubmit(onSubmit)();
-    setIsUpdated(true);
-  };
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
@@ -74,6 +68,8 @@ const LoginModal = () => {
         reset();
       } else if (callback?.error) {
         toast.error(callback.error);
+        setIsLoading(false);
+        console.log("WRONG CREDENTIALSSS");
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -115,7 +111,7 @@ const LoginModal = () => {
               </button>
               <div className="text-lg font-semibold">Login</div>
             </div>
-            <form onSubmit={submitLogin}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className=" p-6 flex-auto">
                 <div className="flex flex-col gap-4">
                   <Input

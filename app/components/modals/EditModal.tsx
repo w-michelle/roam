@@ -198,7 +198,10 @@ const EditModal: React.FC<EditModalProp> = ({ listing, categories }) => {
             htmlFor="images"
             className=" cursor-pointer border-dashed border-2 border-neutral-300 p-20 flex flex-col justify-center items-center"
           >
-            <p>Upload Image</p>
+            <p className="text-center bg-cusGreen hover:bg-cusGreen/30 hover:border-[1px] hover:border-cusGreen hover:text-cusGreen w-[200px] p-2 mt-2 text-white rounded-md">
+              Browse Files
+            </p>
+
             <input
               type="file"
               {...register("images")}
