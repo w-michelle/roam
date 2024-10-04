@@ -1,14 +1,12 @@
 import useCartModal from "@/app/hooks/useCartModal";
 import { SafeListing } from "@/types";
 import axios from "axios";
-import Image from "next/image";
+
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import toast from "react-hot-toast";
-import { BsThreeDots } from "react-icons/bs";
-import { IoMdClose } from "react-icons/io";
+
 import Listing from "./Listing";
-import EmptyState from "../EmptyState";
 
 interface AllListingProps {
   listings: SafeListing[];

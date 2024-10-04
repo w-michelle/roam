@@ -10,6 +10,7 @@ import { IoIosMore } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { BeatLoader } from "react-spinners";
 
 interface CardProps {
   card: SafeCard;
@@ -21,6 +22,8 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
   const found = cards.find((item) => item.id == card.id);
 
   const [toggleDelete, setToggleDelete] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const router = useRouter();
   const [timeSlot, setTimeSlot] = useState({
     stb: card.startTime?.slice(0, 2),
@@ -28,6 +31,15 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
     etb: card.endTime?.slice(0, 2),
     ete: card.endTime?.slice(2, 4),
   });
+
+  useEffect(() => {
+    setTimeSlot({
+      stb: card.startTime?.slice(0, 2),
+      ste: card.startTime?.slice(2, 4),
+      etb: card.endTime?.slice(0, 2),
+      ete: card.endTime?.slice(2, 4),
+    });
+  }, [card.startTime, card.endTime]);
 
   const handleDelete = () => {
     axios
@@ -46,12 +58,44 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
 
   const handleStartFirst = (slot: string, value: string) => {
     setTimeSlot((prev) => ({ ...prev, [slot]: value }));
+    setIsUpdating(true);
   };
   useEffect(() => {
-    axios.post("/api/updateCardTime", {
-      data: { cardId: card.id, timeSlot: timeSlot, itinId: card.itineraryId },
-    });
+    const updateTimeSlot = async () => {
+      try {
+        const response = await axios.post("/api/updateCardTime", {
+          data: {
+            cardId: card.id,
+            timeSlot: timeSlot,
+            itinId: card.itineraryId,
+          },
+        });
+        if (response.status === 200) {
+          setTimeout(() => {
+            setIsUpdating(false);
+          }, 5000);
+          router.refresh();
+        }
+      } catch (error) {
+        toast.error("Error updating time slot");
+        setIsUpdating(false);
+      }
+    };
+
+    updateTimeSlot();
   }, [timeSlot]);
+
+  if (isUpdating) {
+    return (
+      <>
+        <div className="z-50 w-full fixed inset-0 h-screen bg-neutral-300 backdrop-blur-sm opacity-60"></div>
+        <div className="z-50 w-full absolute top-0 left-0 h-screen flex flex-col gap-2 items-center justify-center">
+          <p className="">Updating</p>
+          <BeatLoader size={10} color="black" />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

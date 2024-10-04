@@ -19,7 +19,7 @@ export default async function MainLayout({
   const currentUser = await getCurrentUser();
 
   return (
-    <div>
+    <div className="relative">
       <ToasterProvider />
 
       <CategoryModal />

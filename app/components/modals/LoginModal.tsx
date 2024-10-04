@@ -53,9 +53,8 @@ const LoginModal = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    // Set loading state immediately
     setIsLoading(true);
-    console.log("data:", data);
+
     try {
       setIsLoading(true);
       const callback = await signIn("credentials", {
@@ -79,25 +78,6 @@ const LoginModal = () => {
     } catch (error) {
       toast.error("Something went wrong");
     }
-
-    // signIn("credentials", {s
-    //   ...data,
-    //   redirect: false,
-    // })
-    //   .then((callback) => {
-    //     if (callback?.ok) {
-    //       toast.success("Logged in");
-    //       loginModal.onClose();
-    //       reset();
-    //     }
-    //     if (callback?.error) {
-    //       toast.error(callback.error);
-    //     }
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false); // Set loading state back to false once the process is done
-    //     router.refresh();
-    //   });
   };
 
   const toggle = useCallback(() => {
