@@ -56,7 +56,7 @@ const Auth = () => {
         disabled={loading}
         className="disabled:cursor-not-allowed disabled:bg-cusGreen/30 py-2 px-6 text-xs bg-cusGreen text-white rounded-lg hover:text-cusGreen hover:bg-[#16461e]"
       >
-        Guest Sign In
+        TESTER LOG IN
       </button>
     </div>
   );
