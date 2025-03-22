@@ -297,7 +297,10 @@ const ItineraryContent: React.FC<ItinProps> = ({
         <div className="z-50 w-full absolute top-0 left-0 h-screen bg-neutral-300 backdrop-blur-sm opacity-60"></div>
         <div className="z-50 w-full absolute top-0 left-0 h-screen flex flex-col gap-2 items-center justify-center">
           <p className="">Updating</p>
-          <BeatLoader size={10} color="black" />
+          <BeatLoader
+            size={10}
+            color="black"
+          />
         </div>
       </>
     );
@@ -328,7 +331,10 @@ const ItineraryContent: React.FC<ItinProps> = ({
           className="absolute right-2 cursor-pointer ml-auto"
           onClick={() => setToggleInvite(!toggleInvite)}
         >
-          <IoMdShare size={20} className="text-neutral-600" />
+          <IoMdShare
+            size={20}
+            className="text-neutral-600"
+          />
         </div>
         {toggleInvite && (
           <div className="absolute w-[300px] md:w-[500px] top-20 right-3 rounded-md bg-cusText shadow-xl p-2 z-10">
@@ -336,7 +342,10 @@ const ItineraryContent: React.FC<ItinProps> = ({
               className="cursor-pointer"
               onClick={() => setToggleInvite(!toggleInvite)}
             >
-              <IoMdClose size={20} className="text-white ml-auto" />
+              <IoMdClose
+                size={20}
+                className="text-white ml-auto"
+              />
             </div>
             <div className="text-white text-center mb-2">Invite</div>
             <div className="flex items-center gap-4 mb-2 mx-2">
@@ -345,7 +354,10 @@ const ItineraryContent: React.FC<ItinProps> = ({
               </div>
               <div className="cursor-pointer">
                 {copied ? (
-                  <IoIosCheckmark size={28} className="text-white" />
+                  <IoIosCheckmark
+                    size={28}
+                    className="text-white"
+                  />
                 ) : (
                   <IoCopyOutline
                     className="text-white"
@@ -395,7 +407,11 @@ const ItineraryContent: React.FC<ItinProps> = ({
       </div>
       {/* date container */}
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="lists" type="list" direction="vertical">
+        <Droppable
+          droppableId="lists"
+          type="list"
+          direction="vertical"
+        >
           {/* whole dnd section */}
           {(provided) => (
             <div
@@ -406,7 +422,10 @@ const ItineraryContent: React.FC<ItinProps> = ({
               {/* individual container */}
               {containersList.map((container: any, index: any) => (
                 <div key={container.id}>
-                  <Draggable draggableId={container.id} index={index}>
+                  <Draggable
+                    draggableId={container.id}
+                    index={index}
+                  >
                     {(provided) => (
                       <div
                         {...provided.draggableProps}
@@ -428,7 +447,10 @@ const ItineraryContent: React.FC<ItinProps> = ({
                         </div>
                         <div>
                           {/* droppable card area */}
-                          <Droppable droppableId={container.id} type="card">
+                          <Droppable
+                            droppableId={container.id}
+                            type="card"
+                          >
                             {(provided) => (
                               <div
                                 ref={provided.innerRef}
@@ -459,7 +481,10 @@ const ItineraryContent: React.FC<ItinProps> = ({
                       </div>
                     )}
                   </Draggable>
-                  <CardModal containerId={containersList[0].id} itinId={id} />
+                  <CardModal
+                    containerId={containersList[0].id}
+                    itinId={id}
+                  />
                 </div>
               ))}
               {provided.placeholder}

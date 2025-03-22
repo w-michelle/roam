@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   const { dates, containers, itinId, dateLen, cards } = body.data;
-
+  //new dates/intial render = create new containers and put all items in first container
   try {
     for (let i = 0; i < dateLen; i++) {
       if (i == 0) {
@@ -28,12 +28,14 @@ export async function POST(request: Request) {
         });
       }
     }
+
+    //delete previous containers
     for (let i = 0; i < containers.length; i++) {
       await prisma.container.deleteMany({
         where: { id: containers[i].id },
       });
     }
-
+    //update the dates
     await prisma.itinerary.update({
       where: { id: itinId },
       data: {
@@ -41,7 +43,7 @@ export async function POST(request: Request) {
         endDate: new Date(dates.endDate),
       },
     });
-
+    //return the new containers for itinerary
     const containersThisItin = await prisma.container.findMany({
       where: { itineraryId: itinId },
       include: {

@@ -10,6 +10,8 @@ import getCurrentUser from "../../actions/getCurrentUser";
 import CategoryModal from "../../components/modals/CategoryModal";
 import Categorybar from "../../components/category/Categorybar";
 import ClientOnly from "@/app/components/ClientOnly";
+import { useSession } from "next-auth/react";
+import { Auth } from "@/app/components/Auth";
 
 export default async function MainLayout({
   children,
@@ -18,18 +20,26 @@ export default async function MainLayout({
 }) {
   const currentUser = await getCurrentUser();
 
+  if (currentUser) {
+    return (
+      <div className="relative">
+        <ToasterProvider />
+
+        <CategoryModal />
+
+        <Navbar currentUser={currentUser} />
+        <Categorybar currentUser={currentUser} />
+
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
-      <ToasterProvider />
-
-      <CategoryModal />
       <LoginModal />
       <RegisterModal />
-
-      <Navbar currentUser={currentUser} />
-      <Categorybar currentUser={currentUser} />
-
-      {children}
+      <Auth />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { SafeListing } from "@/types";
 import axios from "axios";
 
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import toast from "react-hot-toast";
 
 import Listing from "./Listing";
@@ -12,7 +12,32 @@ interface AllListingProps {
   listings: SafeListing[];
 }
 
-const AllListings: React.FC<AllListingProps> = ({ listings }) => {
+export const AllListings: React.FC<AllListingProps> = async ({ listings }) => {
+  return (
+    <Suspense fallback={<AllListingsSkeleton />}>
+      <AllListingsSuspense listings={listings} />
+    </Suspense>
+  );
+};
+
+const AllListingsSkeleton = () => {
+  const blocks = Array.from({ length: 15 });
+
+  return (
+    <div className="flex justify-center sm:justify-start gap-4 flex-wrap">
+      {blocks.map((_, index) => (
+        <div
+          key={index}
+          className="relative hover:cursor-pointer border-2 border-neutral-200 p-3 rounded-xl shadow-md bg-neutral-300 animate-pulse"
+        >
+          <div className="relative w-[150px] h-[150px]"></div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const AllListingsSuspense: React.FC<AllListingProps> = ({ listings }) => {
   const router = useRouter();
   const cartModal = useCartModal();
   const handleAddToCart = (item: any) => {
@@ -57,5 +82,3 @@ const AllListings: React.FC<AllListingProps> = ({ listings }) => {
     </div>
   );
 };
-
-export default AllListings;

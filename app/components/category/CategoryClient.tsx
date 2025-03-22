@@ -3,7 +3,7 @@
 import useCategoryModal from "@/app/hooks/useCategoryModal";
 import { SafeCategory, SafeUser } from "@/types";
 import { Category } from "@prisma/client";
-import React from "react";
+import React, { Suspense } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { categoryIcons } from "../modals/CategoryModal";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,40 @@ interface CategoryClientProps {
   categories?: SafeCategory[];
 }
 
-const CategoryClient: React.FC<CategoryClientProps> = ({ categories }) => {
+export const CategoryClient: React.FC<CategoryClientProps> = ({
+  categories,
+}) => {
+  return (
+    <Suspense fallback={<CategorySkeleton />}>
+      <CategoryClientSuspense categories={categories} />
+    </Suspense>
+  );
+};
+
+const CategorySkeleton = () => {
+  const categoryBlock = Array.from({ length: 10 });
+
+  return (
+    <div>
+      <div className="flex gap-4 overflow-x-auto">
+        <div className="flex gap-4">
+          {categoryBlock?.map((_, index) => (
+            <div
+              key={index}
+              className="text-center relative"
+            >
+              <div className="rounded-lg p-3 w-[50px] h-[50px] flex items-center justify-center bg-neutral-300 animate-pulse"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CategoryClientSuspense: React.FC<CategoryClientProps> = ({
+  categories,
+}) => {
   const loginModal = useLoginModal();
 
   const categoryModal = useCategoryModal();
@@ -70,5 +103,3 @@ const CategoryClient: React.FC<CategoryClientProps> = ({ categories }) => {
     </div>
   );
 };
-
-export default CategoryClient;

@@ -5,11 +5,23 @@ import useRegisterModal from "../hooks/useRegisterModal";
 import Logo from "./navbar/Logo";
 import toast from "react-hot-toast";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import Loader from "./Loader";
 
-const Auth = () => {
+export const Auth = () => {
+  return (
+    <Suspense fallback={<AuthSkeleton />}>
+      <AuthSuspense />
+    </Suspense>
+  );
+};
+
+const AuthSkeleton = () => {
+  return <Loader />;
+};
+
+const AuthSuspense = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [loading, setLoading] = useState(false);
@@ -31,9 +43,7 @@ const Auth = () => {
     }
     setLoading(false);
   };
-  if (loading) {
-    <Loader />;
-  }
+
   return (
     <div className="max-w-screen-lg mx-auto flex flex-col gap-4 items-center justify-center h-screen">
       <Logo />
@@ -61,5 +71,3 @@ const Auth = () => {
     </div>
   );
 };
-
-export default Auth;

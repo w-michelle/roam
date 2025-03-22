@@ -44,7 +44,7 @@ export default async function getItinerary(id: string) {
     if (!itinerary) {
       return null;
     }
-
+    //there is cards separate from container and also cards inside container(the next one) have to fetch for both, this is for cards, loop through each and fetch url from aws
     for (let i = 0; i < itinerary.cards.length; i++) {
       for (let j = 0; j < itinerary.cards[i].listing.images.length; j++) {
         const params = {
@@ -58,6 +58,7 @@ export default async function getItinerary(id: string) {
         itinerary.cards[i].listing.images[j].url = url;
       }
     }
+    //loop through each container and within each container loop through each card to fetch the image url from aws
     if (itinerary.container.length > 0) {
       for (let i = 0; i < itinerary.container?.length; i++) {
         for (let k = 0; k < itinerary.container[i].cards.length; k++) {

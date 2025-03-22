@@ -1,4 +1,3 @@
-"use state";
 import { SafeListing } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

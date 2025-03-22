@@ -3,9 +3,10 @@ import useListingModal from "@/app/hooks/useListingModal";
 import { SafeCategory, SafeListing } from "@/types";
 import React from "react";
 import { IoMdAdd } from "react-icons/io";
-import AllListings from "./AllListings";
+
 import ListingModal from "../modals/ListingModal";
 import EmptyState from "../EmptyState";
+import { AllListings } from "./AllListings";
 
 interface AllListingContentProp {
   listings: SafeListing[];
