@@ -43,7 +43,7 @@ const CartModal: React.FC<CartModalProp> = ({ cart }) => {
     setIsLoading(true);
 
     axios
-      .post("/api/createItin", {
+      .post("/api/itinerary/createItin", {
         cartId: cart?.id,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
@@ -64,7 +64,7 @@ const CartModal: React.FC<CartModalProp> = ({ cart }) => {
 
   const handleRemoveFromCart = (listingId: string) => {
     axios
-      .post(`/api/removeFromCart/${listingId}`, { cartId: cart?.id })
+      .post(`/api/cart/removeFromCart/${listingId}`, { cartId: cart?.id })
       .then(() => {
         router.refresh();
       })
@@ -88,7 +88,10 @@ const CartModal: React.FC<CartModalProp> = ({ cart }) => {
 
           <div className="py-6 translate h-full md:h-auto lg:h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <div className="flex items-center px-6 pb-6 border-b-[1px]">
-              <button onClick={handleClose} className="hover:opacity-60">
+              <button
+                onClick={handleClose}
+                className="hover:opacity-60"
+              >
                 <IoMdClose size={18} />
               </button>
               <p className="mx-auto">Bucket</p>

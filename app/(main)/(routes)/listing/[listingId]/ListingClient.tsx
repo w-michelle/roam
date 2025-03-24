@@ -34,7 +34,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     setIsLoading(true);
 
     axios
-      .delete("/api/editListing", {
+      .delete("/api/listings/editListing", {
         data: {
           listingId: listing?.id,
           imgId: imgId,
@@ -54,7 +54,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const handleDeleteListing = () => {
     setIsLoading(true);
     axios
-      .delete(`/api/listings/${listing.id}`)
+      .delete(`/api/listings/deleteListing/${listing.id}`)
       .then(() => {
         toast.success("Removed Listing");
 
@@ -71,7 +71,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const handleAddToCart = () => {
     setIsLoading(true);
     axios
-      .post("/api/addToCart", listing)
+      .post("/api/cart/addToCart", listing)
       .then(() => {
         toast.success("Added to bucket!");
         router.refresh();
@@ -143,7 +143,10 @@ const ListingClient: React.FC<ListingClientProps> = ({
           <FaRegTrashAlt />
         </button>
       </div>
-      <EditModal listing={listing} categories={categories} />
+      <EditModal
+        listing={listing}
+        categories={categories}
+      />
     </div>
   );
 };

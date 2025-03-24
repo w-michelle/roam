@@ -62,7 +62,7 @@ const EditCategoryModal: React.FC<EditCatProp> = ({
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     axios
-      .post("/api/editCategory", data)
+      .post("/api/category/editCategory", data)
       .then(() => {
         toast.success("Category Updated!");
         editCatModal.onClose();
@@ -108,7 +108,10 @@ const EditCategoryModal: React.FC<EditCatProp> = ({
               </button>
               <div className="text-lg font-semibold">Edit category</div>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className="p-9">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="p-9"
+            >
               <Input
                 id="title"
                 label="Title"
@@ -133,7 +136,10 @@ const EditCategoryModal: React.FC<EditCatProp> = ({
                   </div>
                 </div>
                 {catIcons.map((item, index) => (
-                  <div key={index} className="col-span-1">
+                  <div
+                    key={index}
+                    className="col-span-1"
+                  >
                     <div
                       onClick={() => setValue("icon", item.name)}
                       className={`${

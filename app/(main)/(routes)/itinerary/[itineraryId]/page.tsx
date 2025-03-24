@@ -1,7 +1,7 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getItinerary from "@/app/actions/getItinerary";
 import EmptyState from "@/app/components/EmptyState";
-import ItineraryContent from "@/app/components/itinerary/ItineraryContent";
+import ItineraryContent from "@/app/(main)/(routes)/itinerary/[itineraryId]/ItineraryContent";
 
 interface IParams {
   itineraryId: string;

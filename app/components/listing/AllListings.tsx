@@ -42,7 +42,7 @@ const AllListingsSuspense: React.FC<AllListingProps> = ({ listings }) => {
   const cartModal = useCartModal();
   const handleAddToCart = (item: any) => {
     axios
-      .post("/api/addToCart", item)
+      .post("/api/cart/addToCart", item)
       .then(() => {
         toast.success("Added to bucket!");
         router.refresh();
@@ -55,7 +55,7 @@ const AllListingsSuspense: React.FC<AllListingProps> = ({ listings }) => {
 
   const handleDeleteListing = (listingId: any) => {
     axios
-      .delete(`/api/listings/${listingId}`)
+      .delete(`/api/listings/deleteListing/${listingId}`)
       .then(() => {
         toast.success("Removed Listing");
         router.refresh();

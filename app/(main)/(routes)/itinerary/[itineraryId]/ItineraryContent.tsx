@@ -9,11 +9,11 @@ import "react-date-range/dist/theme/default.css";
 
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
-import Card from "./Card";
+import Card from "../../../../components/itinerary/Card";
 import axios from "axios";
 
 import useCardModal from "@/app/hooks/useCardModal";
-import CardModal from "../modals/CardModal";
+import CardModal from "../../../../components/modals/CardModal";
 import { RiDraggable } from "react-icons/ri";
 import { IoIosCheckmark, IoMdClose, IoMdShare } from "react-icons/io";
 import { IoCopyOutline } from "react-icons/io5";
@@ -102,7 +102,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
       const generateContainerList = (dates: Date[]) => {
         setUpdating(true);
         axios
-          .post("/api/updateItinerary", {
+          .post("/api/itinerary/updateItinerary", {
             data: {
               dates: dateRange,
               dateLen: dates.length,
@@ -216,7 +216,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
         sourceList.cards = reorderedCards;
         setContainersList(newOrderedData);
 
-        axios.post("/api/updateCards", {
+        axios.post("/api/cards/updateCardsSameContainer", {
           data: {
             itinId: id,
             reorderedCards: reorderedCards,
@@ -247,7 +247,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
         setContainersList(newOrderedData);
 
         axios
-          .post("/api/updateCardDiff", {
+          .post("/api/cards/updateCardsDiffContainer", {
             data: {
               source: sourceList,
               dest: destList,
@@ -280,7 +280,7 @@ const ItineraryContent: React.FC<ItinProps> = ({
   const handleSubmit = () => {
     if (title !== "") {
       axios
-        .post("/api/updateTitle", { title: title, itinId: id })
+        .post("/api/itinerary/itinTitle", { title: title, itinId: id })
         .then(() => {
           toast.success("Title updated");
           setTitleSubmit(false);

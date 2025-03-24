@@ -1,7 +1,8 @@
 "use client";
 
 import EmptyState from "@/app/components/EmptyState";
-import AllListings from "@/app/components/listing/AllListings";
+import { AllListings } from "@/app/components/listing/AllListings";
+
 import { categoryIcons } from "@/app/components/modals/CategoryModal";
 import EditCategoryModal from "@/app/components/modals/EditCategory";
 import ListingModal from "@/app/components/modals/ListingModal";
@@ -48,7 +49,9 @@ const CategoryContent: React.FC<CategoryClientProps> = ({
   const handleDeleteCategory = () => {
     setIsLoading(true);
     axios
-      .delete("/api/editCategory", { data: { catId: currentCategory.id } })
+      .delete("/api/category/editCategory", {
+        data: { catId: currentCategory.id },
+      })
       .then(() => {
         toast.success("Removed Category");
 

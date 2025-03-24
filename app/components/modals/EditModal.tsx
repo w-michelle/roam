@@ -10,11 +10,12 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IoMdClose } from "react-icons/io";
 import * as yup from "yup";
-import CategoryContent from "../CategoryContent";
+
 import Input from "../inputs/Input";
 import ImagePreview from "../inputs/ImagePreview";
 import ListingContent from "../inputs/ListingContent";
 import Image from "next/image";
+import CategorySelectionBar from "../category/CategorySelectionBar";
 interface EditModalProp {
   listing: SafeListing;
   categories?: SafeCategory[];
@@ -110,7 +111,7 @@ const EditModal: React.FC<EditModalProp> = ({ listing, categories }) => {
     data.append("listingId", listing.id);
 
     axios
-      .post("/api/editListing", data)
+      .post("/api/listings/editListing", data)
       .then((result) => {
         toast.success("Item Updated!");
 
@@ -132,7 +133,7 @@ const EditModal: React.FC<EditModalProp> = ({ listing, categories }) => {
 
   let bodyContent = (
     <div>
-      <CategoryContent
+      <CategorySelectionBar
         onClick={(catId) => setCustomValue("categoryId", catId)}
         selected={selectedId}
         categories={categories}
@@ -146,7 +147,12 @@ const EditModal: React.FC<EditModalProp> = ({ listing, categories }) => {
     headerContent = <div className="text-lg font-semibold">Details</div>;
     bodyContent = (
       <div className="flex flex-col gap-4">
-        <Input register={register} errors={errors} id="title" label="Title" />
+        <Input
+          register={register}
+          errors={errors}
+          id="title"
+          label="Title"
+        />
         <Input
           register={register}
           errors={errors}
@@ -174,7 +180,11 @@ const EditModal: React.FC<EditModalProp> = ({ listing, categories }) => {
                 key={index}
                 className="relative w-[200px] h-[120px] border-[1px] rounded-lg"
               >
-                <Image src={img} alt="Listing Image" fill />
+                <Image
+                  src={img}
+                  alt="Listing Image"
+                  fill
+                />
               </div>
             ))}
           </div>

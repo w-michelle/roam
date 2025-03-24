@@ -162,7 +162,7 @@ const CategoryModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     axios
-      .post("/api/category", data)
+      .post("/api/category/addCategory", data)
       .then(() => {
         toast.success("New Category Created!");
         categoryModal.onClose();
@@ -200,7 +200,10 @@ const CategoryModal = () => {
               </button>
               <div className="text-lg font-semibold">Create a category</div>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className="p-9">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="p-9"
+            >
               <Input
                 id="title"
                 label="Title"
@@ -226,7 +229,10 @@ const CategoryModal = () => {
                 </div>
 
                 {categoryIcons.map((item, index) => (
-                  <div key={index} className="col-span-1">
+                  <div
+                    key={index}
+                    className="col-span-1"
+                  >
                     <div
                       onClick={() => setValue("icon", item.name)}
                       className={`${

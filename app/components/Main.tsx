@@ -4,18 +4,15 @@ import { SafeCategory, SafeListing } from "@/types";
 import React from "react";
 import { IoMdAdd } from "react-icons/io";
 
-import ListingModal from "../modals/ListingModal";
-import EmptyState from "../EmptyState";
-import { AllListings } from "./AllListings";
+import ListingModal from "./modals/ListingModal";
+import EmptyState from "./EmptyState";
+import { AllListings } from "./listing/AllListings";
 
-interface AllListingContentProp {
+interface MainProp {
   listings: SafeListing[];
   categories?: SafeCategory[];
 }
-const AllListingsContent: React.FC<AllListingContentProp> = ({
-  listings,
-  categories,
-}) => {
+const Main: React.FC<MainProp> = ({ listings, categories }) => {
   const listingModal = useListingModal();
 
   return (
@@ -38,4 +35,4 @@ const AllListingsContent: React.FC<AllListingContentProp> = ({
   );
 };
 
-export default AllListingsContent;
+export default Main;

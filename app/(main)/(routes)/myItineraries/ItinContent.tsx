@@ -15,7 +15,7 @@ const ItinContent: React.FC<ItinContentProp> = ({ item }) => {
   const router = useRouter();
   const handleDelete = (itinId: string) => {
     axios
-      .delete("/api/deleteItinerary", { data: { id: itinId } })
+      .delete("/api/itinerary/deleteItinerary", { data: { id: itinId } })
       .then(() => {
         toast.success("Itinerary deleted");
         router.push("/myItineraries");

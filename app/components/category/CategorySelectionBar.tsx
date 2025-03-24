@@ -1,17 +1,17 @@
 import React from "react";
-import getCategory from "../actions/getCategory";
-import getCurrentUser from "../actions/getCurrentUser";
-import { categoryIcons } from "./modals/CategoryModal";
+import getCategory from "../../actions/getCategory";
+import getCurrentUser from "../../actions/getCurrentUser";
+import { categoryIcons } from "../modals/CategoryModal";
 import { SafeCategory } from "@/types";
-import useCategoryModal from "../hooks/useCategoryModal";
+import useCategoryModal from "../../hooks/useCategoryModal";
 import { IoIosAdd } from "react-icons/io";
 
-interface CategoryContentProps {
+interface CategorySelectionBarProps {
   categories?: SafeCategory[];
   onClick: (value: string) => void;
   selected?: string;
 }
-const CategoryContent: React.FC<CategoryContentProps> = ({
+const CategorySelectionBar: React.FC<CategorySelectionBarProps> = ({
   categories,
   onClick,
   selected,
@@ -73,4 +73,4 @@ const CategoryContent: React.FC<CategoryContentProps> = ({
   );
 };
 
-export default CategoryContent;
+export default CategorySelectionBar;

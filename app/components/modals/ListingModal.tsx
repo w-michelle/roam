@@ -4,7 +4,7 @@ import useListingModal from "@/app/hooks/useListingModal";
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import ListingContent from "../inputs/ListingContent";
-import CategoryContent from "../CategoryContent";
+
 import { SafeCategory } from "@/types";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,6 +15,7 @@ import ImagePreview from "../inputs/ImagePreview";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import CategorySelectionBar from "../category/CategorySelectionBar";
 enum STEPS {
   CATEGORY = 0,
   DESCRIPTION = 1,
@@ -96,7 +97,7 @@ const ListingModal: React.FC<ListingModalProps> = ({ categories }) => {
     data.append("description", formValues.description);
 
     axios
-      .post("/api/upload", data)
+      .post("/api/listings/createListing", data)
       .then((result) => {
         toast.success("New Item Created!");
 
@@ -116,7 +117,7 @@ const ListingModal: React.FC<ListingModalProps> = ({ categories }) => {
 
   let bodyContent = (
     <div>
-      <CategoryContent
+      <CategorySelectionBar
         onClick={(catId) => setCustomValue("categoryId", catId)}
         selected={selectedId}
         categories={categories}
@@ -131,7 +132,12 @@ const ListingModal: React.FC<ListingModalProps> = ({ categories }) => {
     headerContent = <div className="text-lg font-semibold">Details</div>;
     bodyContent = (
       <div className="flex flex-col gap-4">
-        <Input register={register} errors={errors} id="title" label="Title" />
+        <Input
+          register={register}
+          errors={errors}
+          id="title"
+          label="Title"
+        />
         <Input
           register={register}
           errors={errors}

@@ -43,7 +43,7 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
 
   const handleDelete = () => {
     axios
-      .delete("/api/removeCard", {
+      .delete("/api/cards/removeCard", {
         data: { cardId: card.id, itinId: card.itineraryId },
       })
       .then(() => {
@@ -63,7 +63,7 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
   useEffect(() => {
     const updateTimeSlot = async () => {
       try {
-        const response = await axios.post("/api/updateCardTime", {
+        const response = await axios.post("/api/cards/updateCardTime", {
           data: {
             cardId: card.id,
             timeSlot: timeSlot,
@@ -91,7 +91,10 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
         <div className="z-50 w-full fixed inset-0 h-screen bg-neutral-300 backdrop-blur-sm opacity-60"></div>
         <div className="z-50 w-full absolute top-0 left-0 h-screen flex flex-col gap-2 items-center justify-center">
           <p className="">Updating</p>
-          <BeatLoader size={10} color="black" />
+          <BeatLoader
+            size={10}
+            color="black"
+          />
         </div>
       </>
     );
@@ -99,7 +102,10 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
 
   return (
     <>
-      <Draggable draggableId={card.id} index={index}>
+      <Draggable
+        draggableId={card.id}
+        index={index}
+      >
         {(provided) => (
           <div
             {...provided.draggableProps}

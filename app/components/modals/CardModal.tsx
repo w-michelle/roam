@@ -94,7 +94,7 @@ const CardModal = ({ containerId, itinId }: CardModalProps) => {
     data.append("itineraryId", itinId);
 
     axios
-      .post("/api/newCard", data)
+      .post("/api/cards/newCard", data)
       .then((result) => {
         toast.success("New Card Created!");
 
@@ -116,7 +116,12 @@ const CardModal = ({ containerId, itinId }: CardModalProps) => {
   let headerContent = <div className="text-lg font-semibold">Details</div>;
   let bodyContent = (
     <div className="flex flex-col gap-4">
-      <Input register={register} errors={errors} id="title" label="Title" />
+      <Input
+        register={register}
+        errors={errors}
+        id="title"
+        label="Title"
+      />
       <Input
         register={register}
         errors={errors}
