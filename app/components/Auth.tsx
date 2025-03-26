@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { Suspense, useState } from "react";
 
 import Loader from "./Loader";
+import { useRouter } from "next/navigation";
 
 export const Auth = () => {
   return (
@@ -25,6 +26,7 @@ const AuthSuspense = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleGuest = async () => {
     setLoading(true);
@@ -36,7 +38,7 @@ const AuthSuspense = () => {
       });
       if (response?.ok) {
         toast.success("Welcome");
-        window.location.reload();
+        router.push("/");
       }
     } catch (error) {
       toast.error(`${error}`);
@@ -45,7 +47,7 @@ const AuthSuspense = () => {
   };
 
   return (
-    <div className="max-w-screen-lg mx-auto flex flex-col gap-4 items-center justify-center h-screen">
+    <div className="relative max-w-screen-lg mx-auto flex flex-col gap-4 items-center justify-center h-screen">
       <Logo />
       <button
         className="disabled:cursor-not-allowed disabled:bg-black/30 py-2 px-6 text-xs bg-black text-white rounded-lg hover:text-black hover:bg-neutral-300"
@@ -68,6 +70,13 @@ const AuthSuspense = () => {
       >
         TESTER LOG IN
       </button>
+
+      {loading && (
+        <div className="absolute top-0 left-0 h-screen flex items-center justify-center w-full bg-white opacity-95">
+          <Loader />
+          <p className="absolute bg-transparent">Loading...</p>
+        </div>
+      )}
     </div>
   );
 };

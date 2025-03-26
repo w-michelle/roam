@@ -17,10 +17,10 @@ const Main: React.FC<MainProp> = ({ listings, categories }) => {
 
   return (
     <div className=" w-full">
-      <div className="flex flex-col sm:flex-row gap-4 ">
+      <div className="flex flex-col items-center sm:items-start sm:flex-row gap-4 ">
         <div
           onClick={listingModal.onOpen}
-          className="hover:bg-neutral-400 hover:text-white hover:cursor-pointer min-w-[175px] h-[180px] border-2 border-neutral-200  rounded-xl shadow-md flex items-center justify-center"
+          className="hover:bg-neutral-400 hover:text-white hover:cursor-pointer min-w-[200px] h-[180px] border-2 border-neutral-200  rounded-xl shadow-md flex items-center justify-center"
         >
           <IoMdAdd size={28} />
         </div>

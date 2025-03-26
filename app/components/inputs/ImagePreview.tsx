@@ -15,7 +15,7 @@ const ImagePreview: React.FC<ImagePreviewProp> = ({ image, onClick }) => {
   useEffect(() => {
     setPreview(URL.createObjectURL(image));
     return () => URL.revokeObjectURL(preview);
-  }, [image]);
+  }, []);
 
   return (
     <div className="group relative flex items-center justify-center border-[1px] rounded-lg hover:border-neutral-400 cursor-pointer">

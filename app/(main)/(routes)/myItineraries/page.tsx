@@ -1,9 +1,6 @@
 import getAllItins from "@/app/actions/getAllItins";
-import Link from "next/link";
 import React from "react";
-
 import ItinContent from "./ItinContent";
-import { all } from "axios";
 import EmptyState from "@/app/components/EmptyState";
 
 export const dynamic = "force-dynamic";
@@ -21,9 +18,10 @@ const MyItineraries = async () => {
 
         <ul className="flex flex-col gap-4 my-10 mx-7">
           {allItins.map((item, index) => (
-            <Link href={`/itinerary/${item.id}`} key={index}>
-              <ItinContent item={item} />
-            </Link>
+            <ItinContent
+              item={item}
+              key={index}
+            />
           ))}
         </ul>
       </div>

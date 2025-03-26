@@ -173,20 +173,24 @@ const EditModal: React.FC<EditModalProp> = ({ listing, categories }) => {
               onClick={() => setNewUpload(true)}
               className="py-2 mb-6 w-[200px] border-2 border-black text-black hover:bg-black hover:text-white rounded-md"
             >
-              Upload New
+              Add More
             </button>
-            {existingImgs.map((img: string, index: any) => (
-              <div
-                key={index}
-                className="relative w-[200px] h-[120px] border-[1px] rounded-lg"
-              >
-                <Image
-                  src={img}
-                  alt="Listing Image"
-                  fill
-                />
-              </div>
-            ))}
+            <div className="flex">
+              {existingImgs.map((img: string, index: any) => (
+                <div
+                  key={index}
+                  className="relative border-[1px] rounded-lg object-cover"
+                >
+                  <Image
+                    className="object-cover"
+                    src={img}
+                    alt="Listing Image"
+                    width={100}
+                    height={100}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         )}
         {images?.length > 0 && newUpload && (

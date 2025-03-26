@@ -232,7 +232,9 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
                   <div className="hover:underline">{card.listing.title}</div>
                 </Link>
 
-                <div className="text-cusText">{card.listing.description}</div>
+                <div className="text-cusText text-xs">
+                  {card.listing.description}
+                </div>
               </div>
               <div
                 className="cursor-pointer relative"

@@ -73,7 +73,7 @@ const CategoryContent: React.FC<CategoryClientProps> = ({
   return (
     <div className="max-w-screen-lg mx-auto mt-4 p-3">
       <div className="pb-4 w-full flex flex-col items-center justify-center gap-2 border-b-[1px] border-neutral-400">
-        <p className="text-neutral-400/70 self-start">
+        <p className="text-neutral-400/70 self-start text-sm">
           Created: {formatDate(currentCategory.createdAt)}
         </p>
         <div>
