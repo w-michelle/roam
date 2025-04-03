@@ -17,7 +17,7 @@ const Categorybar: React.FC<CategorybarProps> = async ({ currentUser }) => {
   const categories = await getCategory(currentUser?.id);
 
   return (
-    <div className="p-3 border-b-[1px]">
+    <div className="px-3 pb-3 pt-5 border-b-[1px]">
       <div>
         <CategoryClient categories={categories} />
       </div>

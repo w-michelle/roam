@@ -20,9 +20,7 @@ export default async function MainLayout({
     return (
       <div className="relative">
         <ToasterProvider />
-
         <CategoryModal />
-
         <Navbar currentUser={currentUser} />
         <Categorybar currentUser={currentUser} />
 

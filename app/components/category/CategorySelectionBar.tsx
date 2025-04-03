@@ -31,7 +31,7 @@ const CategorySelectionBar: React.FC<CategorySelectionBarProps> = ({
   };
   return (
     <div>
-      <div className="flex gap-4 overflow-x-auto">
+      <div className="flex gap-4 overflow-x-auto pb-2">
         <div
           onClick={categoryModal.onOpen}
           className="cursor-pointer rounded-lg p-3 border-[2px] border-neutral-400 w-[50px] h-[50px] flex items-center justify-center"
