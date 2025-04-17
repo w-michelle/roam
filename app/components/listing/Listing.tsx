@@ -35,7 +35,7 @@ const Listing: React.FC<ListingProp> = ({
       <div onClick={() => router.push(`/listing/${listing.id}`)}>
         <div className="relative w-[150px] h-[150px]">
           <Image
-            src={listing.images[0]?.url || "/placeholder.png"}
+            src={listing.images[0]?.url || "/imgplaceholder.png"}
             alt={listing.title}
             fill
             className="object-cover"

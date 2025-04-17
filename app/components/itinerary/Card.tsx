@@ -220,7 +220,7 @@ const Card: React.FC<CardProps> = ({ card, index, cards }) => {
                   />
                 ) : (
                   <Image
-                    src={"/placeholder.png"}
+                    src={"/imgplaceholder.png"}
                     alt="List Item Image"
                     fill
                     className="object-cover"

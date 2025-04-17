@@ -111,7 +111,7 @@ const CartModal: React.FC<CartModalProp> = ({ cart }) => {
                     className="flex items-center gap-10 border-b-[1px] py-5 px-3"
                   >
                     <Image
-                      src={item.images?.[0]?.url || "/placeholder.png"}
+                      src={item.images?.[0]?.url || "/imgplaceholder.png"}
                       width="50"
                       height="50"
                       alt="Item Picture"

@@ -102,7 +102,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
               className="group w-[100px] h-[150px] sm:w-[250px] sm:h-[250px] shadow-md hover:cursor-pointer hover:border-[1px] hover:border-neutral-500 overflow-hidden rounded-xl relative"
             >
               <Image
-                src={image.url || "/placeholder.png"}
+                src={image.url || "/imgplaceholder.png"}
                 fill
                 alt="Image of Listing"
                 className="object-cover"
